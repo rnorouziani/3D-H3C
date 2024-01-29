@@ -3,11 +3,11 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 
-\title{Problem Statement and Goals\\\progname}
+\title{Problem Statement and Goals\\Helmholtz Coil Current Calculator for Target Magnetic Field}
 
-\author{\authname}
+\author{Reyhaneh Norouziani}
 
-\date{}
+\date{January 28, 2024}
 
 \input{../Comments}
 \input{../Common}
@@ -22,35 +22,54 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+28 January 2024 & Reyhaneh Norouziani & Initial release of document\\
+
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Problem Statement}
-
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required information.}
+Magnetic actuation is a fundamental technique in the field of microrobotics, enabling wireless control through magnetic fields. Among various methods for achieving magnetic actuation, the Helmholtz coil system is renowned for its simplicity and stability. This system comprises two electromagnetic coaxial circular coils, each with a radius  $r$, placed at a distance equal to their radius from each other.
 
 \subsection{Problem}
-
+The primary challenge this project seeks to address is the precise calculation of the current required in a 3D Helmholtz Coil System, comprising three pairs of coils, to produce a desired magnetic field. Achieving the target magnetic field necessitates precise control over the current flowing through each coil pair. In a standard Helmholtz setup, a nearly uniform magnetic field is established at the center when equal currents flow through the coils in the same direction. Alternatively, if currents flow in opposite directions, a Maxwell coil configuration is formed, resulting in a uniform magnetic field gradient at the center. The focus of this project is to develop and implement a software system to calculate the necessary current for each coil pair in the Helmholtz configuration, ensuring the generation of a constant magnetic field and uniform gradient in the x, y, and z directions. This calculated control is pivotal for dynamically adjusting the magnetic field, tailored for diverse applications in microrobotics.
 \subsection{Inputs and Outputs}
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+Inputs: 
+\begin{enumerate}
+    \item The characteristics of the 3D Helmholtz system:
+        \begin{enumerate}
+            \item the diameter of each pair of coils
+            \item the distance between each pair of coils
+            \item the number of turns in each coil
+        \end{enumerate}
+    \item The desired magnetic field
+\end{enumerate}
+Outputs:
+\begin{enumerate}
+    \item The needed electric current of each coil in order to produce the desired magnetic field.
+
+\end{enumerate}
 
 \subsection{Stakeholders}
-
+The researchers who design and use the 3D Helmholtz coil system to generate specific magnetic fields are potential stakeholders of our system. 
 \subsection{Environment}
-
-\wss{Hardware and software}
+The software has been designed to be versatile in terms of operating system compatibility, ensuring it works seamlessly across a range of different platforms, including Windows, macOS and Linux.
 
 \section{Goals}
+The goals of this software are as follows:
 
+\begin{enumerate}
+    \item  To accurately determine the necessary current in each coil pair of a 3D Helmholtz Coil System, enabling the generation of a specific magnetic field.
+    \item The software will offer the ability to control the current in each coil pair for creating either a uniform magnetic field in a standard Helmholtz configuration or a uniform magnetic field gradient in a Maxwell configuration.
+    \item It is designed to be compatible with any 3D Helmholtz coil system, irrespective of the system's specific configurations, enhancing its applicability across various setups.
+\end{enumerate}
 \section{Stretch Goals}
+
+\begin{enumerate}
+    \item \textbf{Enhanced User Interface with GUI}: Implementing a Graphical User Interface (GUI) is a key stretch goal. This enhancement will make the software more accessible and user-friendly. The GUI will feature intuitive controls such as sliders and input boxes, allowing users to easily adjust parameters like coil radius, distance, turns. It also offers the potential for real-time visualization of magnetic field changes, making the software more interactive and engaging.
+    \item \textbf{Joystick Integration for Dynamic Control}: Another ambitious stretch goal is the integration of joystick control. This feature will enable users to manipulate the magnetic field in real-time with greater precision and tactile response. The joystick control will be particularly useful for applications requiring fine-tuned adjustments and quick responses, like advanced microrobotics. Combining joystick control with the GUI will provide an unparalleled user experience, enhancing efficiency and ease of use in controlling magnetic fields across various applications.
+\end{enumerate}
+
 
 \end{document}
