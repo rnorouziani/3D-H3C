@@ -11,10 +11,13 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
-
+\usepackage{float}
 \input{../Comments}
 \input{../Common}
 
+\newcounter{testCase}
+\newcommand{\testCaseFormat}{T\thetestCase}
+\newcommand{\tref}[1]{T\ref{#1}}
 \begin{document}
 
 \title{Project Title: System Verification and Validation Plan for \progname{}} 
@@ -36,284 +39,231 @@ Date 2 & 1.1 & Notes\\
 \end{tabularx}
 
 ~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
-
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
-
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
+
 
 \listoffigures
-\wss{Remove this section if it isn't needed}
+
 
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol/Abbreviation/Acronym} & \textbf{Description} \\
+\midrule
+VnV & Verification and Validation \\
+SRS & System Requirements Specification \\
+MG & Module Guide \\
+MIS & Module Interface Specification \\
+\bottomrule
+\end{tabular}
 
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
 
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
-
+This document outlines the validation and verification (VnV) plan for the \progname{}, a specialized software tool for calculating the precise currents required in each coil of a three-axis Helmholtz coil system to achieve specific target magnetic force and torque. The VnV plan will ensure the software's functionality, accuracy, and reliability in facilitating the precise control of magnetic environments for a wide range of applications.
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
-
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
-
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+The objectives within this Verification and Validation (VnV) plan are centered on ensuring the software's proficiency in precisely calculating coil currents necessary for achieving specified magnetic force and torque within a three-axis Helmholtz coil system. Additionally, it aims to confirm the clarity and user-friendliness of the software’s visual outputs, making certain they are easily understandable and provide valuable assistance for users’ research endeavors. This integrated approach emphasizes both accuracy in computational outputs and accessibility in data presentation, underpinning the software's utility in scientific research.
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.}
-
-\citet{SRS}
-
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+For a detailed overview of the Helmholtz-Coil-Current-Calculator-CAS741's objectives, functional requirements, and operational guidelines, please refer to the  \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)} document.
 
 \section{Plan}
 
-\wss{Introduce this section.   You can provide a roadmap of the sections to
-  come.}
-
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
 
+This section describes the members of the Verification and Validation plan.
+
+\begin{table}[h!]
+
+  \vspace*{3mm}
+  \begin{tabular}{|p{0.27\textwidth}|p{0.18\textwidth}|p{0.30\textwidth}|p{0.25\textwidth}|}
+  \hline
+  \textbf{Name} & \textbf{Document} & \textbf{Role} & \textbf{Description} \\
+  \hline
+  Dr. Spencer Smith & All & Instructor/Reviewer & Review the documents, design, and documentation style. \\ 
+  \hline
+  Reyhaneh Norouziani & All & Author & Create and manage all the documents, create the VnV plan, perform the VnV testing, verify the implementation. \\  
+  \hline
+  Tanya Djavaherpour & All & Domain Expert Reviewer & Review all the documents. \\  
+  \hline
+  Yi-Leng Chen & SRS & Secondary Reviewer & Review the SRS document. \\
+  \hline
+  Yidng Li & VnV Plan & Secondary Reviewer & Review the VnV plan. \\ 
+  \hline
+  Atiyeh Sayadi & MG + MIS & Secondary Reviewer & Review the MG and MIS document. \\
+  \hline 
+  \end{tabular}
+  \caption{Verification and Validation Team} \label{team}
+\end{table}
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-  ad hoc feedback from reviewers, like your classmates, or you may plan for 
-  something more rigorous/systematic.}
-
-\wss{Maybe create an SRS checklist?}
+The verification process for the \progname{}'s SRS document will proceed as follows:
+\begin{enumerate}
+    \item An initial review will be conducted by assigned members (Dr. Spencer Smith, Tanya Djavaherpour, Yi-Leng Chen) using the provided \href{https://github.com/smiths/capTemplate/blob/9251702fdcb9800c59f6ed3d11d91e2bd62fca6d/docs/Checklists/SRS-Checklist.pdf}{SRS Checklist}, developed by Dr. Smith. This review will be carried out manually.
+    \item Reviewers can provide feedback to the author by creating issues on Github.
+    \item The author, Reyhaneh Norouziani, is responsible for addressing the issues raised by both primary and secondary reviewers, as well as incorporating any suggestions provided by the instructor, Dr. Spencer Smith.
+\end{enumerate}
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+The verification process for the \progname{}'s Module Guide (MG), and Module Interface Specification (MIS) will proceed as follows:
+\begin{enumerate}
+    \item An initial review will be conducted by assigned members (Dr. Spencer Smith, Tanya Djavaherpour, Atiyeh Sayadi) using the provided \href{https://github.com/smiths/capTemplate/blob/9251702fdcb9800c59f6ed3d11d91e2bd62fca6d/docs/Checklists/MG-Checklist.pdf}{MG Checklist} and \href{https://github.com/smiths/capTemplate/blob/9251702fdcb9800c59f6ed3d11d91e2bd62fca6d/docs/Checklists/MIS-Checklist.pdf}{MIS Checklist}, developed by Dr. Smith. This review will be carried out manually.
+    \item Reviewers can provide feedback to the author by creating issues on Github.
+    \item The author, Reyhaneh Norouziani, is responsible for addressing the issues raised by both primary and secondary reviewers, as well as incorporating any suggestions provided by the instructor, Dr. Spencer Smith.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+The verification process for the \progname{}'s Verification and Validation Plan will proceed as follows:
+\begin{enumerate}
+    \item An initial review will be conducted by assigned members (Dr. Spencer Smith, Tanya Djavaherpour, Yiding Li) using the provided \href{https://github.com/smiths/capTemplate/blob/9251702fdcb9800c59f6ed3d11d91e2bd62fca6d/docs/Checklists/VnV-Checklist.pdf}{VnV Checklist}, developed by Dr. Smith. This review will be carried out manually.
+    \item Reviewers can provide feedback to the author by creating issues on Github.
+    \item The author, Reyhaneh Norouziani, is responsible for addressing the issues raised by both primary and secondary reviewers, as well as incorporating any suggestions provided by the instructor, Dr. Spencer Smith.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
+The Implementation process will consist of both static and dynamic testing methodologies.
 
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+\textbf{Static testing:}
+\begin{itemize}
 
+\item Static testing:
+\begin{itemize}
+\item Code Walkthrough: The author (Reyhaneh Norouziani) will provide the final version of the original code to the domain expert (Tanya Djavaherpour). The domain expert will then manually examine critical test cases, share her findings, and actively participate in discussions. Additionally, she can seek clarification on any aspects of the code as needed.
+\item PyFlakes: PyFlakes, a static code analysis tool, will be utilized to identify common programming errors and potential issues in the \progname{} codebase. This automated process will help ensure code quality and identify any inconsistencies or errors that may have been overlooked during manual code review by the author.
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Dynamic testing:
+\begin{itemize}
+
+\item Test cases: Test cases for all the tests mentioned in \autoref{sec:SysTestDisc} will be executed. These tests aim to validate both functional and non-functional requirements outlined in the \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{SRS} document (Sections 5.1 and 5.2).
+\end{itemize}
+\end{itemize}
 \subsection{Automated Testing and Verification Tools}
+The verification and validation process for the Three-axis Helmholtz Coil System Current Calculator (\progname{}) involves automated testing using the pytest library in Python. One of the automated test cases focuses on verifying the accuracy of the calculated force and torque generated by the input currents. This test ensures that the software performs within acceptable tolerances, as specified by the system requirements. By utilizing pytest for automated testing, we aim to streamline the verification process and maintain the reliability and accuracy of the software across various scenarios. Additionally, pytest allows for the implementation of test cases that validate input data against predefined constraints and verify that output results adhere to expected criteria.
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+\subsection{Software Validation Plan}\label{sec:SysTestDisc}
 
-\subsection{Software Validation Plan}
-
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
+For validation purposes, the project will be demonstrated to Dr. Onaizah, whose research involves the intersection of magnetics and robotics for biomedical applications, including the development of small-scale robotic tools. Given her expertise in working with three-axis Helmholtz Coil Systems, her feedback will be invaluable in assessing the suitability of the program to meet the needs of its intended users, including scientists, engineers, and clinicians working in the field of medical robotics and magnetic applications. Any feedback received from this validation activity will be used to refine and enhance the functionality of the Three-axis Helmholtz Coil System Current Calculator further.
 
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
-
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
-
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
+\subsubsection{Inputs}\label{subsec:Inputs}
+This section ensures that the input and output limitations specified in requirement R1 for \progname{} are verified. These constraints can be found in the "Input Data Constraints" section of the \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{SRS} document. 
 		
-\paragraph{Title for Test}
+\paragraph{ }
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_input1}}: Test input for meeting the constraints}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Control: Automatic
 					
-How test will be performed: 
+Initial State: Pending input
 					
-\item{test-id2\\}
+Input: The inputs mentioned in \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{SRS} as Table 1: Input Variables
+					
+Output: If the inputs meet the constraints, the program will display "Valid"; otherwise, it will present an error message indicating the incorrect input along with the reason for the error.
 
-Control: Manual versus Automatic
+Test Case Derivation: The expected output is justified based on the predefined input constraints specified in the System Requirements Specification \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{SRS} document. These constraints ensure that the input data adhere to the predefined criteria necessary for accurate calculations within the Three-axis Helmholtz Coil System Current Calculator (\progname{}).	
+			
+How test will be performed: The automatic test is performed using pytest.
 					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Outputs}\label{subsec:Outputs}
+\begin{enumerate}
 
-...
+\item{\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_output1}}: Test Output currents to not be greater than maximum acceptable electric current of each coil\label{subsec:Outputs1}}
 
+Control: Automatic
+					
+Initial State: The output is calculated
+					
+Input: Calculated currents of each coils 
+			
+Output: If the inputs do not meet the constraints, the program will display an error message indicating that the needed current is out of range.
+
+Test Case Derivation: The expected output is justified based on the predefined constraints specified in the System Requirements Specification  \href{https://github.com/rnorouziani/Helmholtz-Coil-Current-Calculator-CAS741/blob/main/docs/SRS/SRS.pdf}{SRS} document. These constraints define the maximum acceptable electric current for each coil within the Three-axis Helmholtz Coil System.				
+
+How test will be performed: The automatic test is performed using pytest.
+
+\item{\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_output2}}: Test calculated currents Output are produce the target magnetic force and torque}
+
+Control: Automatic
+					
+Initial State: The output is calculated
+					
+Input: Calculated currents of each coils 
+			
+Output: It calculates the generating force and torque from the input currents, and if they are within $\pm$0.5\% of the target magnetic force and torque, it passes.
+
+Test Case Derivation: The expected outcome is justified by the requirement outlined in the System Requirements Specification (SRS) document, which specifies that the calculated currents should produce a magnetic force and torque with a specific accuracy. 				
+
+How test will be performed: The automatic test is performed using pytest.
+			
+\end{enumerate}
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy}
+\subsubsection{Accuracy}\label{subsec:Accuracy}
+\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_accu}}: This matter is discussed in detail in Section T\ref{T_output2}.
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+\subsubsection{Usability}\label{subsec:Usability}
+\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_usab}}: The usability test will involve a group of users who will interact with the software to complete a specific task. Participants will be tasked with inputting the characteristics of a three-axis Helmholtz coil system, along with a provided target magnetic force and torque, and reading the calculated results. Following the completion of these tasks, participants will provide feedback on the software's user interface design and overall usability by completing a survey(see \ref{subsec:UsabilitySurvery}).
+\subsubsection{Maintainability}\label{subsec:Maintainability}
+\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_maint}}: The Maintainability test for this project occurs through GitHub issue discussions, where reviewers and the instructor evaluate various aspects related to the software's lifespan. These discussions serve as a platform to assess the coupling of the software architecture, the quality of documentation, and other factors impacting maintainability. Through collaborative review and discussion in GitHub issues, reviewers and the instructor evaluate the codebase's readability, modularity, and adherence to coding standards, identifying areas for improvement to ensure the software remains easily maintainable and adaptable in the long term. This proactive approach to maintainability assessment through GitHub issues enables us to address potential issues early in the development process, fostering a more sustainable and efficient software lifecycle.
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
+\subsubsection{Portability}\label{subsec:Portability}
+ \textbf{\refstepcounter{testCase}\testCaseFormat \label{T_port}}: The Portability test for the project involves testing the program on various operating systems to ensure its compatibility and functionality across different platforms. The author will execute all test cases on a range of operating systems, including Windows and Linux distributions. Each test will verify that the program operates correctly and that all test cases are successfully executed without errors or discrepancies. Any issues encountered during testing will be documented and addressed to ensure that the software maintains consistent behavior across different platforms. 
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+& R1 & R2 & NFR1 & NFR2 & NFR3 & NFR4 \\ \hline
+\tref{T_input1} & x & & & & & \\ \hline
+\tref{T_output1} & & x & & & & \\ \hline
+\tref{T_output2} & & x & & & & \\ \hline
+\tref{T_accu} & & &x & & & \\ \hline
+\tref{T_usab} & & & &x & & \\ \hline
+\tref{T_maint} & & & & &x & \\ \hline
+\tref{T_port} & & & & & &x \\ \hline
+\end{tabular}
+\caption{Relationship Between Test Cases and Requirements}
+\label{tab:traceability}
+\end{table}
 
 \section{Unit Test Description}
 
@@ -448,16 +398,37 @@ How test will be performed:
 
 \section{Appendix}
 
-This is where you can place additional information.
+\subsection{Usability Test Survey Questions?}\label{subsec:UsabilitySurvery}
+\begin{enumerate}
+    \item On a scale of 1 to 5, how would you rate the overall ease of use of the software?
+    \begin{enumerate}
+        \item Very difficult
+        \item Difficult
+        \item Neutral
+        \item Easy
+        \item Very easy
+    \end{enumerate}
 
-\subsection{Symbolic Parameters}
+    \item Were you able to input the characteristics of the three-axis Helmholtz coil system and the target magnetic force and torque without difficulty?
+    \begin{enumerate}
+        \item Yes
+        \item No (Please provide details)
+    \end{enumerate}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+    \item How clear and understandable were the calculated results presented by the software?
+    \begin{enumerate}
+        \item Very clear
+        \item Clear
+        \item Neutral
+        \item Unclear
+        \item Very unclear
+    \end{enumerate}
 
-\subsection{Usability Survey Questions?}
+    \item Did you encounter any issues or challenges while using the software? If yes, please describe them briefly.
+    \item Do you have any additional comments or suggestions for improving the usability of the software?
 
-\wss{This is a section that would be appropriate for some projects.}
+\end{enumerate}
+
 
 \newpage{}
 \section*{Appendix --- Reflection}
