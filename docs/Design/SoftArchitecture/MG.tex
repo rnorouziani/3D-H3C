@@ -157,12 +157,14 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware on which the software is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acInputData}:] The format of the input data.
+\item[\refstepcounter{acnum} \actheacnum \label{acInputConstraints}:] The constraints on the input.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutputFormat}:] The format of the result as the output.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutputConstraints}:] The constraints on the output results.
+\item[\refstepcounter{acnum} \actheacnum \label{acCurrentCalculation}:] How the required currents are calculated.
 \end{description}
+
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -174,10 +176,14 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInteractionMethods}:] Methods of interaction and data presentation (Inputs via: Keyboard or File; Outputs via: Screen, File, or Memory storage).
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucDataAvailability}:] The presence of an external source for the provision of input data to the system is a given.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucDataPresentation}:] The system ensures the visualization or saving of output data.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucObjective}:] The primary objective of this system is to determine the specific currents needed by each coil for generating desired magnetic forces and torques at the center.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucCurrentCalculationODE}:] The equations for calculating the required currents can be defined using parameters defined in the input parameters module.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucMagneticFieldEquations}:] The magnetic field and force/torque equations can be defined using the parameters defined in the input parameters module.
 \end{description}
+
 
 \section{Module Hierarchy} \label{SecMH}
 
@@ -188,7 +194,14 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mIFM}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOFM}:] Output Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOVM}:] Output Verification Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMCM}:] Magnetic Core Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCTM}:] CoilT Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCM}:] Control Module
+\item [\refstepcounter{mnum} \mthemnum \label{mVM}:] Vector Module
+
 \end{description}
 
 
@@ -202,19 +215,16 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{5}{0.3\textwidth}{Behaviour-Hiding Module} & Input Format Module\\
+& Output Format Module\\
+& Output Verification Module\\
+& Magnetic Core Module\\
+& CoilT Module\\
+& Control Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{1}{0.3\textwidth}{Software Decision Module} & Vector Module\\
+
 \bottomrule
 
 \end{tabular}
@@ -227,13 +237,6 @@ actually be implemented.
 The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
-
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -274,18 +277,59 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Input Format Module (\mref{mIFM})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
+\item[Secrets:]The format and structure of the input data, the methods for data entry, and how the data are varified. The processes for loading and verifying inputs are segregated into distinct access programs. The integrated nature of these services, which are executed collectively, implies that the principle of adhering strictly to a single secret per module can be made more flexible in this scenario.
 \item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
+  Magnetic Core module.
+\item[Implemented By:] \progname 
 \item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
   [Information to include for leaf modules in the decomposition by secrets tree.]
 \end{description}
 
-\subsubsection{Etc.}
+
+\subsubsection{Output Format Module (\mref{mOFM})}
+
+\begin{description}
+\item[Secrets:]The format and structure of the output data
+\item[Services:]Outputs the currents needed in each pair of coils.
+\item[Implemented By:] \progname 
+\end{description}
+
+\subsubsection{Output Verification Module (\mref{mOVM})}
+
+\begin{description}
+\item[Secrets:]The module hides the algorithm used for evaluating output data.
+\item[Services:]It verifies the output result by first checking that the calculated currents remain within acceptable operational thresholds and, secondly, validates the accuracy of the output by comparing it with predefined accuracy benchmarks. If discrepancies are found, whether in terms of accuracy or current values exceeding safe limits, the module throws a warning.
+\item[Implemented By:] \progname 
+\end{description}
+
+\subsubsection{coilT module (\mref{mCTM})}
+
+\begin{description}
+\item[Secrets:]The data structure of a pair of Coils
+\item[Services:]Provides comprehensive data on the coil pair's configuration, using the detailed coil parameters defined in the input parameters module. 
+\item[Implemented By:] \progname 
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Magnetic Core Module (\mref{mMCM})}
+
+\begin{description}
+\item[Secrets:]The physical constants and algorithm used to implement the magnetic equations to calculate the required currents. Given that there is only one physical constraint, segregating it into a separate module could introduce unnecessary complexity without substantial benefits. Therefore, accommodating two secrets within a single module is considered reasonable in this scenario.
+\item[Services:] Define the current calculator equations.
+\item[Implemented By:] \progname 
+\end{description}
+
+\subsubsection{Control Module (\mref{mCM})}
+
+\begin{description}
+\item[Secrets:]The algorithm for coordinating the running of the program
+\item[Services:]Provide the main program
+\item[Implemented By:] \progname 
+\end{description}
+
 
 
 \subsection{Software Decision Module}
@@ -301,7 +345,14 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Vector Module (\mref{mVM})}
+
+\begin{description}
+\item[Secrets:]The algorithms for performing a wide range of vector operations
+\item[Services:]Provides functions executing various vector operations.
+\item[Implemented By:] NumPy
+\end{description}
+
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -316,17 +367,11 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mHH}, \mref{mIFM}\\
+R2 & \mref{mMCM}, \mref{mCTM}, \mref{mCM}, \mref{mVM}\\
+R3 & \mref{mOFM}\\
+R4 & \mref{mOVM}, \mref{mOFM}\\
+
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -340,17 +385,11 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acInputData} & \mref{mIFM}\\
+\acref{acInputConstraints} & \mref{mIFM}\\
+\acref{acOutputFormat} & \mref{mOFM}\\
+\acref{acOutputConstraints} & \mref{mOVM}\\
+\acref{acCurrentCalculation} & \mref{mMCM}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -372,27 +411,12 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.6\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
 
 %\section*{References}
-
-\section{User Interfaces}
-
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
-
-\section{Design of Communication Protocols}
-
-\wss{If appropriate}
-
-\section{Timeline}
-
-\wss{Schedule of tasks and who is responsible}
-
-\wss{You can point to GitHub if this information is included there}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
