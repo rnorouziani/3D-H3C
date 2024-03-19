@@ -62,9 +62,7 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+See SRS Documentation at \url{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}
 
 \newpage
 
@@ -76,17 +74,13 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for \progname{}
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/rnorouziani/3D-H3C}
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
@@ -105,7 +99,7 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
+boolen & bool & true or false \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 \bottomrule
@@ -134,18 +128,16 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
+\multirow{5}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
+& Output Format Module\\
+& Output Verification Module\\
+& Magnetic Core Module\\
+& CoilT Module\\
 & Control Module\\
-& Specification Parameters Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{1}{0.3\textwidth}{Software Decision} & Vector Module\\
+
 \bottomrule
 
 \end{tabular}
@@ -156,32 +148,28 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Input Format Module} \label{MIF}
 
 \subsection{Module}
-
-\wss{Short name for the module}
+Input
 
 \subsection{Uses}
-
+Hardware Hiding Modules
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
+None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{3cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+load\_coils & string & [CoilT, CoilT, CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]] & FileError  \\
+\hline
+load\_params & string & [[$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]]  & FileError  \\
 \hline
 \end{tabular}
 \end{center}
@@ -189,44 +177,294 @@ The following table is taken directly from the Module Guide document for this pr
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
-
+None.
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
+command line, file
 \subsubsection{Assumptions}
+None.
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+\subsubsection{Access Routine Semantics}
+\noindent load\_coils(file\_name):
+\begin{itemize}
+\item output: The output is composed of an array containing three instances of CoilT, with each instance representing a pair of coils, and an array representing the magnetic moment of the obeject subject to the specified target magnetic torque and force .  
+\item exception: FileError if the file name file\_name cannot be found OR the format of inputFile is incorrect.
+\end{itemize}
+\noindent load\_params(input\_str):
+\begin{itemize}
+\item output: The output is an array composed of tow arrays. One representing the target force vector, and the other representing the target torque vector.
+\item exception: FileError if the format of input\_str is incorrect.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+
+\section{MIS of CoilT module} \label{MCT}
+
+\subsection{Module}
+coil
+
+\subsection{Uses}
+None.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+CoilT & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{N}$, $\mathbb{R}$ & CoilT  & ValueError \\
+\hline
+get\_R & - & $\mathbb{R}$  & -  \\
+\hline
+get\_L & - & $\mathbb{R}$  & -  \\
+\hline
+get\_N & - & $\mathbb{N}$  & -  \\
+\hline
+get\_maxI & - & $\mathbb{R}$  & -  \\
+\hline
+get\_magnetic\_force & $\mathbb{R}$, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]  & -  \\
+\hline
+get\_magnetic\_torque & $\mathbb{R}$, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]  & -  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+R, l, N, Max\_I
+\subsubsection{Environment Variables}
+None.
+\subsubsection{Assumptions}
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent CoilT(R,l,N,Max\_I):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: The state variables are initialized with their values by invoking the constructor.
+\item exception: ValueError if the inputs do not adhere to the Input Data Constraints. Detailed messages corresponding to each type of violation can be found in the appendix.
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent get\_R():
+\begin{itemize}
+\item output: The radius of the coil is returned as the output.
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent get\_R():
+\begin{itemize}
+\item output: The radius of the coil is returned as the output.
+\end{itemize}
+\noindent get\_L():
+\begin{itemize}
+\item output: The distance between the pair of coils is returned as the output.
+\end{itemize}
+\noindent get\_N():
+\begin{itemize}
+\item output: The number of turns of wire in each coil is returned as the output.
+\end{itemize}
+\noindent get\_maxI():
+\begin{itemize}
+\item output:  The maximum acceptable electric current of the coil is returned as the output.
+\end{itemize}
+\noindent get\_magnetic\_fild(I, isMaxwell):
+\begin{itemize}
+\item output: Calculate the magnetic field generated in the coils by the current, I. The parameter isMaxwell determines whether the coil configuration is that of a Helmholtz coil or a Maxwell coil. The equation mentioned in GD2 and GD3 of the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)}  is used. 
+\end{itemize}
+\noindent get\_magnetic\_force(I, [$m_x$,$m_y$,$m_z$]):
+\begin{itemize}
+\item output: The magnetic force exerted on an object, characterized by its magnetic moment vector m, is calculated based on the magnetic field produced by the current I.
+\end{itemize}
+\noindent get\_magnetic\_torque(I, [$m_x$,$m_y$,$m_z$]):
+\begin{itemize}
+\item output: The magnetic torque exerted on an object, characterized by its magnetic moment vector m, is calculated based on the magnetic field produced by the current I.
+\end{itemize}
 
 \subsubsection{Local Functions}
+None.
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
 
+
+\section{MIS of Magnetic Core Module} \label{MMC}
+
+\subsection{Module}
+mCore
+
+\subsection{Uses}
+Vector Module, CoilT Module [\ref{MCT}]
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{6cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+MagneticCore  & CoilT, CoilT, CoilT & MagneticCore   & - \\
+\hline
+calculate\_magnetic\_field\_at\_center & - & $\mathbb{N}$  & -  \\
+\hline
+calculate\_current\_of\_target\_torque & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & $\mathbb{R}$  & -  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$]
+\subsubsection{Environment Variables}
+None.
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent MagneticCore (CoilT, CoilT, CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
+\begin{itemize}
+\item transition: The state variables are initialized with their values by invoking the constructor.
+\end{itemize}
+
+\noindent calculate\_magnetic\_field\_at\_center([$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
+\begin{itemize}
+\item output: The current is calculated by using the equation mentioned in IM1 in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)} document. The resulting calculated current is then returned as the output.
+\end{itemize}
+
+\noindent calculate\_current\_of\_target\_torque([$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
+\begin{itemize}
+\item output: The current is calculated by using the equation mentioned in IM2 in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)} document. The resulting calculated current is then returned as the output.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+\section{MIS of Output Verification Module} \label{MOV}
+
+\subsection{Module}
+Input
+
+\subsection{Uses}
+Hardware Hiding Modules
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+OutputVerification & CoilT,CoilT,CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], $\mathbb{R}$,$\mathbb{R}$ & - & OutputVerification  \\
+\hline
+is\_currents\_within\_range & - & bool & -  \\
+\hline
+
+calculate\_accuracy & - & bool & -  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2
+\subsubsection{Environment Variables}
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+\noindent OutputVerification(CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2):
+\begin{itemize}
+\item output: The state variables are initialized with their values by invoking the constructor.
+\end{itemize}
+
+\noindent is\_currents\_within\_range():
+\begin{itemize}
+\item output:Returns true if all the currents are smaller than the maximum acceptable electric current for the corresponding coils.
+\end{itemize}
+
+\noindent calculate\_accuracy():
+\begin{itemize}
+\item output:Returns true if the accuracy of the calculated current I exceeds a specified constant value.
+\end{itemize}
+\subsubsection{Local Functions}
+None.
+
+
+\section{MIS of Control Module} \label{Mc}
+
+\subsection{Module}
+control
+
+\subsection{Uses}
+Input Format Module [\ref{MIF}], Output Format Module, Output Verification Module [\ref{MOV}], Magnetic Core Module [\ref{MMC}], CoilT Module [\ref{MCT}]
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{6cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+main  & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+CoilTx,  CoilTy,  CoilTz , inputF, magneticCore, verification, OutputF
+\subsubsection{Environment Variables}
+None.
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent main():
+\begin{itemize}
+\item transition: The state variables are initialized with their values through the invocation of constructors, and these state variables are modified during the execution by these steps:\\
+
+\text{[coilTx, coilTy, coilTz, [$m_x$, $m_y$, $m_z$]] = load\_coils(file\_name)}\\
+\\
+The following steps are repeatable, enabling the calculation of currents multiple times.\\
+\\
+\text{[[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$]] = load\_params(file\_name)}\\
+
+MagneticCore(coilTx, coilTy, coilTz)\\
+\\
+I1 = calculate\_current\_of\_target\_force()\\
+\\
+I2 = calculate\_current of\_target\_torque()\\
+\\
+OutputVerification(CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2)\\
+\\
+is\_currents\_within\_range()\\
+\\
+calculate\_accuracy()\\
+
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
 \newpage
 
 \bibliographystyle {plainnat}
@@ -236,21 +474,17 @@ The following table is taken directly from the Module Guide document for this pr
 
 \section{Appendix} \label{Appendix}
 
-\wss{Extra information if required}
 
-\section{Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Problem Analysis and Design.  Please answer the following questions:
-
-\begin{enumerate}
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
-\end{enumerate}
+\begin{longtable}{l p{12cm}}
+\caption{Possible Exceptions} \\
+\toprule
+\textbf{Exception Type} & \textbf{Error Message} \\
+\midrule
+ValueError & Error: Radius must be $> 0$ \\
+ValueError & Error: Distance between the coils must be $> 0$ \\
+ValueError & Error: The number of turns must be elements of the set of natural numbers\\
+\bottomrule
+\end{longtable}
 
 
 \end{document}
