@@ -18,6 +18,10 @@
 \newcounter{testCase}
 \newcommand{\testCaseFormat}{T\thetestCase}
 \newcommand{\tref}[1]{T\ref{#1}}
+
+\newcommand{\unitTestref}[1]{UT\ref{#1}} \newcounter{uttnum}
+\newcommand{\UTthettnum}{UT\theuttnum}
+
 \begin{document}
 
 \title{Project Title: System Verification and Validation Plan for \progname{}} 
@@ -267,128 +271,79 @@ How test will be performed: The automatic test is performed using pytest.
 
 \section{Unit Test Description}
 
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
-
+The scope of the unit tests will focus on the functionality of each module within the software, with an exception made for the OutputFormat module. The OutputFormat module is excluded from unit testing as it contains only a single, simple method responsible for displaying two lines of output, which does not warrant the setup of formal unit tests. Testing for this module will be conducted manually to ensure the output is formatted and displayed correctly. The rest of the unit tests will exclude testing external library functionalities.
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+\subsubsection{CoilT Module}
 
-\subsubsection{Module 1}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+This module tests the initialization and parameter validation of the CoilT class, which represents individual coils in the system. The tests are implemented in TestCoilT.py and are designed to ensure that coil objects are correctly instantiated and that their parameters are validated according to the specified rules. Each test is named after the specific condition it checks, making it straightforward to understand what each test validates.
 
 \begin{enumerate}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Coils Valid Data}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Coils File Not Found}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Coils Invalid JSON}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Create Coil from Data Valid}
 
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
 \end{enumerate}
 
-\subsubsection{Module 2}
+\subsubsection{InputFormat Module}
 
-...
+This module tests the functionality of the InputFormat class, which is responsible for loading and validating coil configuration data from JSON files. The tests are implemented in TestInputFormat.py and are designed to ensure that the class accurately handles various data input scenarios. Each test is named to reflect the specific functionality it assesses, facilitating clear and understandable test coverage.
+
+\begin{enumerate}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Valid Initialization}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Radius}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Distance}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Turns}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Current}
+\end{enumerate}
+
+\subsubsection{MagneticCoreTest Module}
+
+This module tests the functionality of various methods within the MagneticCore Module. The tests are implemented in TestMagneticCore.py, and the names of the tests are directly derived from the methods they evaluate. This naming convention ensures clarity and helps easily identify which method each test is designed to validate. 
+
+\begin{enumerate}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Initialization Test}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Calculate Current of Target Force}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Calculate Current of Target Torque}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Magnetic Torque Calculation}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Magnetic Force Calculation}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Magnetic Field Helmholtz}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Derivatives of Magnetic Field Maxwell at Center} 
+\end{enumerate}
+
+
+\subsubsection{OutputVerification Module}
+
+This module tests the functionality of the OutputVerification class, which is responsible for ensuring the accuracy of calculated outputs based on predefined criteria. The tests are implemented in TestOutputVerification.py. Each test is named after the specific functionality or condition it verifies.
+\begin{enumerate}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Currents Within Range Valid}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Currents Within Range Invalid}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Valid}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Force Invalid}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Torque Invalid}
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
+None.
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all of the modules have been considered.}
+\begin{table}[h]
+  \centering
+  \caption{Traceability Between Test Cases and Modules}
+  \vspace{3mm}
+  \label{tab:my-table}
+  \begin{tabular}{l|c}
+  Module         & Tests \\ \hline
+\tref{T_input1} & UT1 to UT16\\
+\tref{T_output1} & UT17, UT18\\
+\tref{T_output2} &  UT18 to UT21\\
+  \end{tabular}
+  \end{table}
 				
 \bibliographystyle{plainnat}
 
@@ -427,33 +382,6 @@ How test will be performed:
     \item Did you encounter any issues or challenges while using the software? If yes, please describe them briefly.
     \item Do you have any additional comments or suggestions for improving the usability of the software?
 
-\end{enumerate}
-
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
-
-\begin{enumerate}
-  \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete the verification and validation of your project?
-  Examples of possible knowledge and skills include dynamic testing knowledge,
-  static testing knowledge, specific tool usage etc.  You should look to
-  identify at least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
 \end{enumerate}
 
 \end{document}
