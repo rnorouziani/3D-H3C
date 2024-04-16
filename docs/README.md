@@ -29,4 +29,11 @@ the unnecessary folders and rename your folder to SRS.>
 
 The folders and files for this folder are as follows:
 
-Describe ...
+Checklists - Checklists for documentations
+Design - Software Design Documentations
+ProblemStatementAndGoals - Software Requirements Specification 
+VnVPlan - Verification and Validation Plan
+VnVReport - Verification and Validation Report
+Presentations - Presentation slides
+SRS - Software Requirements Specification
+

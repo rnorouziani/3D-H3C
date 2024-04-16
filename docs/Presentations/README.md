@@ -2,4 +2,6 @@
 
 The folders and files for this folder are as follows:
 
-- <fill in details>
+MG-MIS - Slides for MG-MIS presentation
+SRS - Slides for SRS presentation
+

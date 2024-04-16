@@ -8,5 +8,5 @@ Research Software) projects>
 
 The folders and files for this folder are as follows:
 
-Describe ...
+All files related to the Software Requirements Specification.
 
