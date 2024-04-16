@@ -755,7 +755,7 @@ $\Longrightarrow I_z=-\frac{2\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{5/2}
   \hline
   Sources& Derived from the mentioned equations \\
   \hline
-  Ref.\ By & \rref{R_Calculate2}\\
+  Ref.\ By & \rref{R_Calculate1}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -882,11 +882,9 @@ qualities that the software is expected to exhibit.
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] {The software shall allow users to input the target magnetic torque, magnetic force, the magnetic moment of magnetic particle, and characteristics of a three-axis Helmholtz coil system, including the number of turns in each coil, the radius of each coil, and the distance between the coils.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] {The software shall output the calculated currents for each coil in a format that is easy for the user to interpret}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate1}:] {The software shall calculate the required current for each coil to produce a specified magnetic force and torque by using \iref{cnf} and \iref{cnt}.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate1}:] {The software shall calculate the required current for each coil to produce a specified magnetic force by using \iref{cnf}.}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate2}:] {The software shall calculate the required current for each coil to produce a specified magnetic torque by using \iref{cnt}.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_output}:] {The software shall verify that the calculated currents fall within the acceptable current range.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] {The software shall perform calculations with an accuracy that meets the requirements of typical scientific and engineering applications.}
 
@@ -993,9 +991,7 @@ the assumptions.
 \iref{cnf}            & & X& &   \\ \hline
 \iref{cnt}            & X& & & \\ \hline
 \rref{R_Inputs}     & & & & \\ \hline
-\rref{R_OutputInputs}    & & & &  \\ \hline
 \rref{R_Calculate1}   & & & & \\ \hline
-\rref{R_Calculate2}  & X& X& &\\ \hline
 \rref{R_Output}     & X& & &  \\ \hline 
 
 
