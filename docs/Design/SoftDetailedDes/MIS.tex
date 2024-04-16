@@ -167,9 +167,9 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-load\_coils & string & [CoilT, CoilT, CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]] & FileError  \\
+load\_coils & string & [CoilT, CoilT, CoilT, [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]] & FileError  \\
 \hline
-load\_params & string & [[$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]]  & FileError  \\
+load\_params & string & [[$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$], [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]]  & FileError  \\
 \hline
 \end{tabular}
 \end{center}
@@ -179,7 +179,7 @@ load\_params & string & [[$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$
 \subsubsection{State Variables}
 None.
 \subsubsection{Environment Variables}
-command line, file
+command line:string, file:string
 \subsubsection{Assumptions}
 None.
 
@@ -228,9 +228,9 @@ get\_N & - & $\mathbb{N}$  & -  \\
 \hline
 get\_maxI & - & $\mathbb{R}$  & -  \\
 \hline
-get\_magnetic\_force & $\mathbb{R}$, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]  & -  \\
+get\_magnetic\_force & $\mathbb{R}$, [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$] & [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]  & -  \\
 \hline
-get\_magnetic\_torque & $\mathbb{R}$, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]  & -  \\
+get\_magnetic\_torque & $\mathbb{R}$, [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$] & [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]  & -  \\
 \hline
 \end{tabular}
 \end{center}
@@ -277,11 +277,11 @@ None.
 \begin{itemize}
 \item output: Calculate the magnetic field generated in the coils by the current, I. The parameter isMaxwell determines whether the coil configuration is that of a Helmholtz coil or a Maxwell coil. The equation mentioned in GD2 and GD3 of the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)}  is used. 
 \end{itemize}
-\noindent get\_magnetic\_force(I, [$m_x$,$m_y$,$m_z$]):
+\noindent get\_magnetic\_force(I:$\mathbb{R}$, [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$]):
 \begin{itemize}
 \item output: The magnetic force exerted on an object, characterized by its magnetic moment vector m, is calculated based on the magnetic field produced by the current I.
 \end{itemize}
-\noindent get\_magnetic\_torque(I, [$m_x$,$m_y$,$m_z$]):
+\noindent get\_magnetic\_torque(I:$\mathbb{R}$, [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$]):
 \begin{itemize}
 \item output: The magnetic torque exerted on an object, characterized by its magnetic moment vector m, is calculated based on the magnetic field produced by the current I.
 \end{itemize}
@@ -314,7 +314,7 @@ MagneticCore  & CoilT, CoilT, CoilT & MagneticCore   & - \\
 \hline
 calculate\_current\_of\_target\_force & - & $\mathbb{N}$  & -  \\
 \hline
-calculate\_current\_of\_target\_torque & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$] & $\mathbb{R}$  & -  \\
+calculate\_current\_of\_target\_torque & [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$] & $\mathbb{R}$  & -  \\
 \hline
 \end{tabular}
 \end{center}
@@ -322,7 +322,7 @@ calculate\_current\_of\_target\_torque & [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$]
+CoilTx:CoilT,  CoilTy:CoilT,  CoilTz:CoilT , [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$]
 \subsubsection{Environment Variables}
 None.
 \subsubsection{Assumptions}
@@ -330,17 +330,17 @@ None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent MagneticCore (CoilT, CoilT, CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
+\noindent MagneticCore (CoilT, CoilT, CoilT, [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]):
 \begin{itemize}
 \item transition: The state variables are initialized with their values by invoking the constructor.
 \end{itemize}
 
-\noindent calculate\_current\_of\_target\_force([$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
-\begin{itemize}
+\noindent calculate\_current\_of\_target\_force([$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]):
+\begin{itemize}    
 \item output: The current is calculated by using the equation mentioned in IM1 in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)} document. The resulting calculated current is then returned as the output.
 \end{itemize}
 
-\noindent calculate\_current\_of\_target\_torque([$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$]):
+\noindent calculate\_current\_of\_target\_torque([$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$]):
 \begin{itemize}
 \item output: The current is calculated by using the equation mentioned in IM2 in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{System Requirements Specification (SRS)} document. The resulting calculated current is then returned as the output.
 \end{itemize}
@@ -366,7 +366,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-OutputVerification & CoilT,CoilT,CoilT, [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], [$\mathbb{R}$,$\mathbb{R}$,$\mathbb{R}$], $\mathbb{R}$,$\mathbb{R}$ & - & OutputVerification  \\
+OutputVerification & CoilT,CoilT,CoilT, [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$], [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$], [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$], $\mathbb{R}$, $\mathbb{R}$ & - & OutputVerification  \\
 \hline
 is\_currents\_within\_range & - & bool & -  \\
 \hline
@@ -379,14 +379,14 @@ calculate\_accuracy & - & bool & -  \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2
+CoilTx:CoilT,  CoilTy:CoilT,  CoilTz:CoilT , [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$], [$f_x$:$\mathbb{R}$, $f_y$:$\mathbb{R}$, $f_z$:$\mathbb{R}$], [$t_x$:$\mathbb{R}$, $t_y$:$\mathbb{R}$, $t_z$:$\mathbb{R}$], I1:$\mathbb{R}$, I2:$\mathbb{R}$
 \subsubsection{Environment Variables}
 
 \subsubsection{Assumptions}
 None.
 
 \subsubsection{Access Routine Semantics}
-\noindent OutputVerification(CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2):
+\noindent OutputVerification(CoilTx,  CoilTy,  CoilTz , [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$], [$f_x$:$\mathbb{R}$, $f_y$:$\mathbb{R}$, $f_z$:$\mathbb{R}$], [$t_x$:$\mathbb{R}$, $t_y$:$\mathbb{R}$, $t_z$:$\mathbb{R}$], I1:$\mathbb{R}$, I2:$\mathbb{R}$):
 \begin{itemize}
 \item output: The state variables are initialized with their values by invoking the constructor.
 \end{itemize}
@@ -431,7 +431,7 @@ main  & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-CoilTx,  CoilTy,  CoilTz , inputF, magneticCore, verification, OutputF
+CoilTx:CoilT,  CoilTy:CoilT,  CoilTz:CoilT , inputF:InputFormat, magneticCore:MagneticCore, verification:OutputVerification, OutputF:OutputFormat
 \subsubsection{Environment Variables}
 None.
 \subsubsection{Assumptions}
@@ -443,11 +443,11 @@ None.
 \begin{itemize}
 \item transition: The state variables are initialized with their values through the invocation of constructors, and these state variables are modified during the execution by these steps:\\
 
-\text{[coilTx, coilTy, coilTz, [$m_x$, $m_y$, $m_z$]] = load\_coils(file\_name)}\\
+\text{[coilTx:CoilT, coilTy:CoilT, coilTz:CoilT,[$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$]] = load\_coils(file\_name:string)}\\
 \\
 The following steps are repeatable, enabling the calculation of currents multiple times.\\
 \\
-\text{[[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$]] = load\_params(file\_name)}\\
+\text{[[$f_x$:$\mathbb{R}$, $f_y$:$\mathbb{R}$, $f_z$:$\mathbb{R}$], [$t_x$:$\mathbb{R}$, $t_y$:$\mathbb{R}$, $t_z$:$\mathbb{R}$]] = load\_params(file\_name:string)}\\
 
 MagneticCore(coilTx, coilTy, coilTz)\\
 \\
@@ -455,7 +455,7 @@ I1 = calculate\_current\_of\_target\_force()\\
 \\
 I2 = calculate\_current of\_target\_torque()\\
 \\
-OutputVerification(CoilTx,  CoilTy,  CoilTz , [$m_x$, $m_y$, $m_z$],[$f_x$, $f_y$, $f_z$], [$t_x$, $t_y$, $t_z$], I1, I2)\\
+OutputVerification(CoilTx:CoilT,  CoilTy:CoilT,  CoilTz:CoilT, [$m_x$:$\mathbb{R}$, $m_y$:$\mathbb{R}$, $m_z$:$\mathbb{R}$], [$f_x$:$\mathbb{R}$, $f_y$:$\mathbb{R}$, $f_z$:$\mathbb{R}$], [$t_x$:$\mathbb{R}$, $t_y$:$\mathbb{R}$, $t_z$:$\mathbb{R}$], I1:$\mathbb{R}$, I2:$\mathbb{R}$)\\
 \\
 is\_currents\_within\_range()\\
 \\
