@@ -176,7 +176,7 @@ The verification and validation process for the Three-axis Helmholtz Coil System
 
 \subsection{Software Validation Plan}\label{sec:SysTestDisc}
 
-For validation purposes, the project will be demonstrated to Dr. Onaizah, whose research involves the intersection of magnetics and robotics for biomedical applications, including the development of small-scale robotic tools. Given her expertise in working with three-axis Helmholtz Coil Systems, her feedback will be invaluable in assessing the suitability of the program to meet the needs of its intended users, including scientists, engineers, and clinicians working in the field of medical robotics and magnetic applications. Any feedback received from this validation activity will be used to refine and enhance the functionality of the Three-axis Helmholtz Coil System Current Calculator further.
+For validation purposes, the project will be demonstrated to Dr. Onaizah, whose research involves the intersection of magnetics and robotics for biomedical applications, including the development of small-scale robotic tools. Given her expertise in working with three-axis Helmholtz Coil Systems, her feedback will be invaluable in assessing the suitability of the program to meet the needs of its intended users, including scientists, engineers, and clinicians working in the field of medical robotics and magnetic applications. As part of the validation process, Dr. Onaizah will be asked to complete a detailed survey.(see \ref{subsec:ExpertUsabilitySurvery}). Any feedback received from this validation activity will be used to refine and enhance the functionality of the Three-axis Helmholtz Coil System Current Calculator further.
 
 \section{System Test Description}
 	
@@ -244,7 +244,7 @@ How test will be performed: The automatic test is performed using \href{https://
 \textbf{\refstepcounter{testCase}\testCaseFormat \label{T_accu}}: This matter is discussed in detail in Section T\ref{T_output2}.
 
 \subsubsection{Usability}\label{subsec:Usability}
-\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_usab}}: The usability test will involve a group of users who will interact with the software to complete a specific task. Participants will be tasked with inputting the characteristics of a three-axis Helmholtz coil system, along with a provided target magnetic force and torque, and reading the calculated results. Following the completion of these tasks, participants will provide feedback on the software's user interface design and overall usability by completing a survey(see \ref{subsec:UsabilitySurvery}).
+\textbf{\refstepcounter{testCase}\testCaseFormat \label{T_usab}}: The Usability test will involve a group of users who will interact with the software to complete a specific task. Participants will be tasked with inputting the characteristics of a three-axis Helmholtz coil system, along with a provided target magnetic force and torque, and reading the calculated results. Following the completion of these tasks, participants will provide feedback on the software's user interface design and overall usability by completing a survey(see \ref{subsec:UsabilitySurvery}).
 \subsubsection{Maintainability}\label{subsec:Maintainability}
 \textbf{\refstepcounter{testCase}\testCaseFormat \label{T_maint}}: The Maintainability test for this project occurs through GitHub issue discussions, where reviewers and the instructor evaluate various aspects related to the software's lifespan. These discussions serve as a platform to assess the coupling of the software architecture, the quality of documentation, and other factors impacting maintainability. Through collaborative review and discussion in GitHub issues, reviewers and the instructor evaluate the codebase's readability, modularity, and adherence to coding standards, identifying areas for improvement to ensure the software remains easily maintainable and adaptable in the long term. This proactive approach to maintainability assessment through GitHub issues enables us to address potential issues early in the development process, fostering a more sustainable and efficient software lifecycle.
 
@@ -362,7 +362,7 @@ None.
 
 \section{Appendix}
 
-\subsection{Usability Test Survey Questions?}\label{subsec:UsabilitySurvery}
+\subsection{Usability Test Survey Questions}\label{subsec:UsabilitySurvery}
 \begin{enumerate}
     \item On a scale of 1 to 5, how would you rate the overall ease of use of the software?
     \begin{enumerate}
@@ -407,6 +407,62 @@ None.
     \item Did you encounter any issues or challenges while using the software? If yes, please describe them briefly.
     \item Do you have any additional comments or suggestions for improving the usability of the software?
 
+\end{enumerate}
+
+\subsection{Expert Feedback Survey Questions}\label{subsec:ExpertUsabilitySurvery}
+
+Please complete the following survey to provide feedback on your experience with the software. Your insights are invaluable for improving our product.
+
+\begin{enumerate}
+\item How relevant is this software to your current research and work in the field of biomedical robotics and magnetics?
+\begin{enumerate}
+    \item Not relevant
+    \item Slightly relevant
+    \item Moderately relevant
+    \item Very relevant
+    \item Extremely relevant
+\end{enumerate}
+
+\item Based on your experience, how user-friendly is the software?
+\begin{enumerate}
+    \item Very difficult to use
+    \item Difficult to use
+    \item Neutral
+    \item Easy to use
+    \item Very easy to use
+\end{enumerate}
+
+\item How effectively does the software meet its stated objectives for calculating precise currents required in a three-axis Helmholtz coil system?
+\begin{enumerate}
+    \item Not effectively at all
+    \item Somewhat effectively
+    \item Moderately effectively
+    \item Very effectively
+    \item Extremely effectively
+\end{enumerate}
+
+\item How accurate are the output results from the software in achieving specific target magnetic force and torque?
+\begin{enumerate}
+    \item Very inaccurate
+    \item Somewhat inaccurate
+    \item Neutral
+    \item Somewhat accurate
+    \item Very accurate
+\end{enumerate}
+
+\item What improvements or additional features would make the software more valuable for your work?
+\item What are the strengths of the software?
+\item What are the weaknesses of the software?
+\item Overall, how satisfied are you with the software in terms of its application to your research area?
+\begin{enumerate}
+    \item Very dissatisfied
+    \item Dissatisfied
+    \item Neutral
+    \item Satisfied
+    \item Very satisfied
+\end{enumerate}
+
+\item Do you have any other suggestions or comments that could help improve the software?
 \end{enumerate}
 
 \end{document}
