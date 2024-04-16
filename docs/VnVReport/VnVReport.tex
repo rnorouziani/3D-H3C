@@ -1,5 +1,6 @@
 \documentclass[12pt, titlepage]{article}
 
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -48,7 +49,6 @@ Date 2 & 1.1 & Notes\\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
 
 \newpage
 
@@ -62,57 +62,170 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document presents the outcomes of the tests specified in the Verification and Validation (\href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV}) Plan.
 
 \section{Functional Requirements Evaluation}
 
+
+This section evaluates the functionality of the 3D-H3C software, focusing on the verification of inputs and outputs against the specifications outlined in the System Requirements Specification (\href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{SRS}).
+
+\subsection{T1: Test for Input Constraints}
+\textbf{Description:} This test verifies that all input variables conform to the constraints specified in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{SRS}. It ensures the software accepts only valid inputs which adhere to predefined criteria necessary for correct calculations within the 3D-H3C system.
+
+\textbf{Responsible Unit Tests:} UT1 to UT16 cover a range of scenarios, from proper data loading and validation to ensuring correct initialization of different software modules. Detailed results of these unit tests are discussed in the \hyperref[sec:UT]{Unit Testing} section.
+
+\subsection{T2: Test for Output Current Constraints}
+\textbf{Description:} This test ensures that the output currents do not exceed the maximum acceptable values for each coil, as specified in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{SRS}. This is crucial for preventing operational hazards and ensuring the system's safety and reliability.
+
+\textbf{Responsible Unit Tests:} UT17 and UT18 focus on validating the outputs of the software. UT17 checks if currents within the specified range are valid, while UT18 tests responses when currents exceed permissible limits. Detailed results of these tests are provided in the \hyperref[sec:UT]{Unit Testing} section.
+
+\subsection{T3: Test for Target Magnetic Force and Torque}
+\textbf{Description:} This test validates that the calculated currents produce the target magnetic force and torque within the required accuracy, in accordance with the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/SRS/SRS.pdf}{SRS}. This precision is essential for applications where exact magnetic outputs are critical.
+
+\textbf{Responsible Unit Tests:} UT19 to UT21 assess various aspects of output accuracy. UT19 to UT21 verify that the outputs (force and torque) meet required accuracy levels. Details on the execution and outcomes of these tests are elaborated in the \hyperref[sec:UT]{Unit Testing} section.
+
+
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
+\subsection{Overview}
+The evaluation of nonfunctional requirements is critical for ensuring that the system not only meets its functional specifications but also adheres to performance, usability, reliability, and other qualitative metrics that define a well-rounded and robust system. 
 
-\subsection{etc.}
-	
-\section{Comparison to Existing Implementation}	
+\subsection{Status of Evaluation}
+As of the current development stage, the evaluation of nonfunctional requirements has not been conducted. The primary reason for this is the limited time available during the initial phases of the project. This section will be updated as evaluations are carried out and results become available.
 
-This section will not be appropriate for every project.
 
 \section{Unit Testing}
 
-\section{Changes Due to Testing}
+This section shows the results of running the unit tests as outlined in the Verification and Validation Plan (\href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}) documents.The results here confirm the successful execution of all outlined tests, demonstrating that each component of the software meets the functional specifications stated in the \href{https://github.com/rnorouziani/3D-H3C/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}.
 
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
 
-\section{Automated Testing}
-		
+\subsection{CoilT Module Test}
+\begin{small}
+\begin{verbatim}
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+TestCoilT.py::TestCoilT::test_init_invalid_current 
+TestCoilT.py::TestCoilT::test_init_invalid_distance 
+TestCoilT.py::TestCoilT::test_init_invalid_radius 
+TestCoilT.py::TestCoilT::test_init_invalid_turns 
+TestCoilT.py::TestCoilT::test_init_valid 
+
+============================== 5 passed in 0.02s ===============================
+PASSED	[ 20%]PASSED	[ 40%]PASSED	[ 60%]PASSED	[ 80%]PASSED	[100%]
+
+\end{verbatim}
+\end{small}
+
+
+\subsection{InputFormat Module}
+\begin{small}
+\begin{verbatim}
+============================= test session starts ==============================
+collecting ... collected 4 items
+
+TestInputFormat.py::TestInputFormat::test_create_coil_from_data_valid 
+TestInputFormat.py::TestInputFormat::test_load_coils_file_not_found 
+TestInputFormat.py::TestInputFormat::test_load_coils_invalid_json 
+TestInputFormat.py::TestInputFormat::test_load_coils_valid 
+
+============================== 4 passed in 0.04s ===============================
+PASSED [ 25%]PASSED [ 50%]PASSED [ 75%]PASSED        [100%]
+
+\end{verbatim}
+\end{small}
+
+\subsection{MagneticCoreTest Module}
+\begin{small}
+\begin{verbatim}
+============================= test session starts ==============================
+collecting ... collected 7 items
+
+TestMagneticCore.py::TestMagneticCore::test_calculate_current_of_target_force 
+TestMagneticCore.py::TestMagneticCore::test_calculate_current_of_target_torque 
+TestMagneticCore.py::TestMagneticCore::test_derivatives_of_magnetic_field_maxwell_at_center 
+TestMagneticCore.py::TestMagneticCore::test_initialization 
+TestMagneticCore.py::TestMagneticCore::test_magnetic_field_helmholtz 
+TestMagneticCore.py::TestMagneticCore::test_magnetic_force 
+TestMagneticCore.py::TestMagneticCore::test_magnetic_torque 
+
+============================== 7 passed in 0.02s ===============================
+PASSED [ 14%]PASSED [ 28%]PASSED [ 42%]PASSED	[ 57%]PASSED [ 71%]PASSED	[ 85%]PASSED       [100%]
+
+\end{verbatim}
+\end{small}
+
+
+\subsection{OutputVerification Module}
+\begin{small}
+\begin{verbatim}
+============================= test session starts ==============================
+collecting ... collected 5 items
+
+TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_force_invalid 
+TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_torque_invalid 
+TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_valid 
+TestOutputVerification.py::TestOutputVerification::test_is_currents_within_range_invalid 
+TestOutputVerification.py::TestOutputVerification::test_is_currents_within_range_valid 
+
+============================== 5 passed in 0.02s ===============================
+PASSED [ 20%]PASSED [ 40%]PASSED [ 60%]PASSED [ 80%]PASSED [100%]
+
+\end{verbatim}
+\end{small}
+
 \section{Trace to Requirements}
+\begin{table}[H]
+  \centering
+  \caption{Relation of Test Cases to Requirements.}
+  \vspace{2mm}
+  \label{tab:req_trace}
+  \begin{tabular}{|l|l|l|l|l|l|l|l|l|} % Corrected to include the correct number of columns
+  \hline
+     & R1 & R2 & R3 & R4 & NFR1 & NFR2 & NFR3 & NFR4 \\ \hline
+  T1 & x  &    &    &    &      &      &      &      \\ \hline
+  T2 &    &    &  x  &    &      &      &      &      \\ \hline
+  T3 &    &  x  &    &    &      &      &      &      \\ \hline
+  T4 &    &    &    &  x  &  x    &      &      &      \\ \hline
+  T5 &    &    &    &    &      &   x   &      &      \\ \hline
+  T6 &    &    &    &    &      &      &   x   &      \\ \hline
+  T7 &    &    &    &    &      &      &      &   x   \\ \hline
+  \end{tabular}
+\end{table}
 		
 \section{Trace to Modules}		
-
+\begin{table}[H]
+  \centering
+  \caption{Traceability Between Test Cases and Modules}
+  \vspace{3mm}
+  \label{tab:my-table}
+  \begin{tabular}{l|c}
+  Module         & Tests \\ \hline
+T1 & UT1 to UT16\\
+T2 & UT17, UT18\\
+T3 &  UT19 to UT21\\
+\end{tabular}
+\end{table}
 \section{Code Coverage Metrics}
+\begin{small}
+\begin{verbatim}
+Name                                              Stmts   Miss  Cover
+---------------------------------------------------------------------
+/home/reyhaneh/3D-H3C/src/CoilT.py                   15      0   100%
+/home/reyhaneh/3D-H3C/src/InputFormat.py             50     28    44%
+/home/reyhaneh/3D-H3C/src/MagneticCore.py            56      0   100%
+/home/reyhaneh/3D-H3C/src/OutputVerification.py      40     18    55%
+/home/reyhaneh/3D-H3C/src/__init__.py                 0      0   100%
+TestCoilT.py                                         25      1    96%
+TestInputFormat.py                                   35      1    97%
+TestMagneticCore.py                                  48      1    98%
+TestOutputVerification.py                            30      1    97%
+---------------------------------------------------------------------
+TOTAL                                               299     50    83%
 
+\end{verbatim}
+\end{small}
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Reflection.  Please answer the following question:
-
-\begin{enumerate}
-  \item In what ways was the Verification and Validation (VnV) Plan different
-  from the activities that were actually conducted for VnV?  If there were
-  differences, what changes required the modification in the plan?  Why did
-  these changes occur?  Would you be able to anticipate these changes in future
-  projects?  If there weren't any differences, how was your team able to clearly
-  predict a feasible amount of effort and the right tasks needed to build the
-  evidence that demonstrates the required quality?  (It is expected that most
-  teams will have had to deviate from their original VnV Plan.)
-\end{enumerate}
 
 \end{document}
