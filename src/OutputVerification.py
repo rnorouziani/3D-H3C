@@ -45,7 +45,7 @@ class OutputVerification:
             if n_f == n_e_f:
                 similarity_t = 1.0
             else:
-                similarity_t = -1
+                similarity_t = -1.0
         else:
             similarity_t = np.dot(self.v_t, e_t) / (n_t * n_e_t)
 

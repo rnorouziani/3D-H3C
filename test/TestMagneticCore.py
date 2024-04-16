@@ -54,4 +54,4 @@ class TestMagneticCore(unittest.TestCase):
         self.assertAlmostEqual(db, expected_db)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)

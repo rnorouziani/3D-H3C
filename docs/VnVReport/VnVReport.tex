@@ -102,17 +102,16 @@ This section shows the results of running the unit tests as outlined in the Veri
 \subsection{CoilT Module Test}
 \begin{small}
 \begin{verbatim}
-============================= test session starts ==============================
-collecting ... collected 5 items
 
-TestCoilT.py::TestCoilT::test_init_invalid_current 
-TestCoilT.py::TestCoilT::test_init_invalid_distance 
-TestCoilT.py::TestCoilT::test_init_invalid_radius 
-TestCoilT.py::TestCoilT::test_init_invalid_turns 
-TestCoilT.py::TestCoilT::test_init_valid 
+test_init_invalid_current (__main__.TestCoilT) ... ok
+test_init_invalid_distance (__main__.TestCoilT) ... ok
+test_init_invalid_radius (__main__.TestCoilT) ... ok
+test_init_invalid_turns (__main__.TestCoilT) ... ok
+test_init_valid (__main__.TestCoilT) ... ok
 
-============================== 5 passed in 0.02s ===============================
-PASSED	[ 20%]PASSED	[ 40%]PASSED	[ 60%]PASSED	[ 80%]PASSED	[100%]
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+ok
 
 \end{verbatim}
 \end{small}
@@ -121,16 +120,24 @@ PASSED	[ 20%]PASSED	[ 40%]PASSED	[ 60%]PASSED	[ 80%]PASSED	[100%]
 \subsection{InputFormat Module}
 \begin{small}
 \begin{verbatim}
-============================= test session starts ==============================
-collecting ... collected 4 items
 
-TestInputFormat.py::TestInputFormat::test_create_coil_from_data_valid 
-TestInputFormat.py::TestInputFormat::test_load_coils_file_not_found 
-TestInputFormat.py::TestInputFormat::test_load_coils_invalid_json 
-TestInputFormat.py::TestInputFormat::test_load_coils_valid 
+test_create_coil_from_data_valid (__main__.TestInputFormat) ... ok
+test_load_coils_file_not_found (__main__.TestInputFormat) ... ok
+test_load_coils_invalid_json (__main__.TestInputFormat) ... ok
+test_load_coils_valid (__main__.TestInputFormat) ... ok
+test_load_params_invalid_combination (__main__.TestInputFormat) ... Error: Regarding the magnetic moment, the target magnetic torque or force is not achievable!
+ok
+test_load_params_invalid_magnetic_force (__main__.TestInputFormat) ... Error: Please enter exactly 3 values for the target magnetic force.
+ok
+test_load_params_invalid_magnetic_moment (__main__.TestInputFormat) ... Error: Exactly 3 values must enter for the magnetic moment vector.
+ok
+test_load_params_invalid_magnetic_torque (__main__.TestInputFormat) ... Error: Exactly 3 values must enter for the target magnetic torque.
+ok
+test_load_params_valid_input (__main__.TestInputFormat) ... ok
 
-============================== 4 passed in 0.04s ===============================
-PASSED [ 25%]PASSED [ 50%]PASSED [ 75%]PASSED        [100%]
+----------------------------------------------------------------------
+Ran 9 tests in 0.011s
+ok
 
 \end{verbatim}
 \end{small}
@@ -138,19 +145,19 @@ PASSED [ 25%]PASSED [ 50%]PASSED [ 75%]PASSED        [100%]
 \subsection{MagneticCoreTest Module}
 \begin{small}
 \begin{verbatim}
-============================= test session starts ==============================
-collecting ... collected 7 items
 
-TestMagneticCore.py::TestMagneticCore::test_calculate_current_of_target_force 
-TestMagneticCore.py::TestMagneticCore::test_calculate_current_of_target_torque 
-TestMagneticCore.py::TestMagneticCore::test_derivatives_of_magnetic_field_maxwell_at_center 
-TestMagneticCore.py::TestMagneticCore::test_initialization 
-TestMagneticCore.py::TestMagneticCore::test_magnetic_field_helmholtz 
-TestMagneticCore.py::TestMagneticCore::test_magnetic_force 
-TestMagneticCore.py::TestMagneticCore::test_magnetic_torque 
+test_calculate_current_of_target_force (__main__.TestMagneticCore) ... ok
+test_calculate_current_of_target_torque (__main__.TestMagneticCore) ... ok
+test_derivatives_of_magnetic_field_maxwell_at_center (__main__.TestMagneticCore) ... ok
+test_initialization (__main__.TestMagneticCore) ... ok
+test_magnetic_field_helmholtz (__main__.TestMagneticCore) ... ok
+test_magnetic_force (__main__.TestMagneticCore) ... ok
+test_magnetic_torque (__main__.TestMagneticCore) ... ok
 
-============================== 7 passed in 0.02s ===============================
-PASSED [ 14%]PASSED [ 28%]PASSED [ 42%]PASSED	[ 57%]PASSED [ 71%]PASSED	[ 85%]PASSED       [100%]
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+OK
+
 
 \end{verbatim}
 \end{small}
@@ -159,17 +166,20 @@ PASSED [ 14%]PASSED [ 28%]PASSED [ 42%]PASSED	[ 57%]PASSED [ 71%]PASSED	[ 85%]PA
 \subsection{OutputVerification Module}
 \begin{small}
 \begin{verbatim}
-============================= test session starts ==============================
-collecting ... collected 5 items
 
-TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_force_invalid 
-TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_torque_invalid 
-TestOutputVerification.py::TestOutputVerification::test_is_accurate_enough_valid 
-TestOutputVerification.py::TestOutputVerification::test_is_currents_within_range_invalid 
-TestOutputVerification.py::TestOutputVerification::test_is_currents_within_range_valid 
+test_calculate_similarity_opposite_direction (__main__.TestOutputVerification) ... ok
+test_calculate_similarity_perfect_match (__main__.TestOutputVerification) ... ok
+test_calculate_similarity_zero_vectors (__main__.TestOutputVerification) ... ok
+test_is_accurate_enough_force_invalid (__main__.TestOutputVerification) ... ok
+test_is_accurate_enough_torque_invalid (__main__.TestOutputVerification) ... ok
+test_is_accurate_enough_valid (__main__.TestOutputVerification) ... ok
+test_is_currents_within_range_invalid (__main__.TestOutputVerification) ... ok
+test_is_currents_within_range_valid (__main__.TestOutputVerification) ... ok
 
-============================== 5 passed in 0.02s ===============================
-PASSED [ 20%]PASSED [ 40%]PASSED [ 60%]PASSED [ 80%]PASSED [100%]
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+OK
+
 
 \end{verbatim}
 \end{small}
@@ -194,34 +204,35 @@ PASSED [ 20%]PASSED [ 40%]PASSED [ 60%]PASSED [ 80%]PASSED [100%]
 \end{table}
 		
 \section{Trace to Modules}		
-\begin{table}[H]
+\begin{table}[h]
   \centering
   \caption{Traceability Between Test Cases and Modules}
   \vspace{3mm}
   \label{tab:my-table}
   \begin{tabular}{l|c}
-  Module         & Tests \\ \hline
-T1 & UT1 to UT16\\
-T2 & UT17, UT18\\
-T3 &  UT19 to UT21\\
-\end{tabular}
-\end{table}
+    Module         & Tests \\ \hline
+    T1 & UT1 to UT21\\
+    T2 & UT22, UT23\\
+    T3 &  UT24 to UT29\\
+  \end{tabular}
+ \end{table}
 \section{Code Coverage Metrics}
 \begin{small}
 \begin{verbatim}
 Name                                              Stmts   Miss  Cover
 ---------------------------------------------------------------------
 /home/reyhaneh/3D-H3C/src/CoilT.py                   15      0   100%
-/home/reyhaneh/3D-H3C/src/InputFormat.py             50     28    44%
+/home/reyhaneh/3D-H3C/src/InputFormat.py             50      2    96%
 /home/reyhaneh/3D-H3C/src/MagneticCore.py            56      0   100%
-/home/reyhaneh/3D-H3C/src/OutputVerification.py      40     18    55%
+/home/reyhaneh/3D-H3C/src/OutputVerification.py      40      2    95%
 /home/reyhaneh/3D-H3C/src/__init__.py                 0      0   100%
 TestCoilT.py                                         25      1    96%
-TestInputFormat.py                                   35      1    97%
+TestInputFormat.py                                   61      1    98%
 TestMagneticCore.py                                  48      1    98%
-TestOutputVerification.py                            30      1    97%
+TestOutputVerification.py                            49      1    98%
 ---------------------------------------------------------------------
-TOTAL                                               299     50    83%
+TOTAL                                               344      8    98%
+
 
 \end{verbatim}
 \end{small}

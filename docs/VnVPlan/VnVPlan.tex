@@ -286,7 +286,7 @@ This module tests the initialization and parameter validation of the CoilT class
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Coils File Not Found}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Coils Invalid JSON}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Create Coil from Data Valid}
-
+  
 \end{enumerate}
 
 \subsubsection{InputFormat Module}
@@ -299,6 +299,11 @@ This module tests the functionality of the InputFormat class, which is responsib
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Distance}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Turns}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Invalid Current}
+   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Params Valid Input}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Params Invalid Magnetic Moment}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Params Invalid Magnetic Torque}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Params Invalid Magnetic Force}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Load Params Invalid Combination}
 \end{enumerate}
 
 \subsubsection{MagneticCoreTest Module}
@@ -325,6 +330,9 @@ This module tests the functionality of the OutputVerification class, which is re
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Valid}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Force Invalid}
   \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Accuracy Torque Invalid}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Similarity Perfect Match}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Similarity Opposite Direction}
+  \item[\refstepcounter{uttnum} \UTthettnum:] \textbf{Similarity Zero Vector}
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
@@ -338,12 +346,12 @@ None.
   \vspace{3mm}
   \label{tab:my-table}
   \begin{tabular}{l|c}
-  Module         & Tests \\ \hline
-\tref{T_input1} & UT1 to UT16\\
-\tref{T_output1} & UT17, UT18\\
-\tref{T_output2} &  UT19 to UT21\\
+    Module         & Tests \\ \hline
+    \tref{T_input1} & UT1 to UT21\\
+    \tref{T_output1} & UT22, UT23\\
+    \tref{T_output2} &  UT24 to UT29\\
   \end{tabular}
-  \end{table}
+ \end{table}
 				
 \bibliographystyle{plainnat}
 

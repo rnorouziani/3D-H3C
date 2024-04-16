@@ -28,4 +28,4 @@ class TestCoilT(unittest.TestCase):
             CoilT(r=1, l=2, n=10, max_i=0)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
