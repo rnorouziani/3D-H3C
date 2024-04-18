@@ -191,9 +191,7 @@ description of the unit and the SI name.
 \subsection{Table of Symbols}
 
 The table that follows summarizes the symbols used in this document along with
-their units.  The choice of symbols was made to be consistent with the heat
-transfer literature and with existing documentation for solar water heating
-systems.  The symbols are listed in alphabetical order.
+their units. The symbols are listed in alphabetical order.
 
 \renewcommand{\arraystretch}{1.2}
 %\noindent \begin{tabularx}{1.0\textwidth}{l l X}
@@ -203,13 +201,14 @@ systems.  The symbols are listed in alphabetical order.
 $B_x$ & \si[per-mode=symbol]{\tesla} & Magnetic field along the x-axis \\
 $B_y$ & \si[per-mode=symbol]{\tesla} & Magnetic field along the y-axis \\
 $B_z$ & \si[per-mode=symbol]{\tesla} & Magnetic field along the z-axis \\
+$d\vec{\ell}$ & \si[per-mode=symbol]{\meter} & An infinitesimal element of the wire carrying current \\
 $F$ & \si[per-mode=symbol]{\newton} & Magnetic force \\
 $H$ & \si[per-mode=symbol]{\ampere\per\metre} & Total magnetic field strength \\
 $I_x$ & \si[per-mode=symbol]{\ampere} & Electric current through the x-axis coils \\
-$I_y$ & \si[per-mode=symbol]{\ampere} & Electric current through the y-axis coils \\
-$I_z$ & \si[per-mode=symbol]{\ampere} & Electric current through the z-axis coils \\
 $I_{{max}_x}$ & \si[per-mode=symbol]{\ampere} & Maximum acceptable electric current through the x-axis coils \\
+$I_y$ & \si[per-mode=symbol]{\ampere} & Electric current through the y-axis coils \\
 $I_{{max}_y}$ & \si[per-mode=symbol]{\ampere} & Maximum acceptable electric current through the y-axis coils \\
+$I_z$ & \si[per-mode=symbol]{\ampere} & Electric current through the z-axis coils \\
 $I_{{max}_z}$ & \si[per-mode=symbol]{\ampere} & Maximum acceptable electric current through the z-axis coils \\
 $l_x$ & \si[per-mode=symbol]{\metre} & Distance between the coils along the x-axis \\
 $l_y$ & \si[per-mode=symbol]{\metre} & Distance between the coils along the y-axis \\
@@ -220,6 +219,11 @@ $N_z$ & & Number of turns in the z-axis coil \\
 $R_x$ & \si[per-mode=symbol]{\metre} & Radius of the coils along the x-axis \\
 $R_y$ & \si[per-mode=symbol]{\metre} & Radius of the coils along the y-axis \\
 $R_z$ & \si[per-mode=symbol]{\metre} & Radius of the coils along the z-axis \\
+$\vec{B}$ & \si[per-mode=symbol]{\tesla} & Magnetic field vector \\
+$\vec{m}$ & \si[per-mode=symbol]{\ampere\square\meter} & Magnetic moment vector \\
+$\vec{r}$ & \si[per-mode=symbol]{\meter} & The vector pointing from the element of the current $d\vec{\ell}$ to the point where the field is being calculated \\
+$\|\vec{r}\|$  & \si[per-mode=symbol]{\meter} & Magnitude of the $\vec{r}$ \\
+$\vec{\tau}$ & \si[per-mode=symbol]{\newton\meter} & Torque vector \\
 $\mathbf{\tau}$ & \si[per-mode=symbol]{\si{\newton\meter}} & Magnetic torque \\
 $x$ & \si[per-mode=symbol]{\metre} & Position along the x-axis from the midpoint \\
 $y$ & \si[per-mode=symbol]{\metre} & Position along the y-axis from the midpoint \\
@@ -270,8 +274,7 @@ The project's scope is concentrated on developing a current calculator for a Thr
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 {
-The reader should have a strong foundation in physics, particularly in electromagnetism. A university-level understanding, at least at the undergraduate level, is expected. Familiarity with differential calculus and vector analysis is necessary since the project involves calculating magnetic field gradients and currents.
-
+The reader should have a strong foundation in physics, particularly in electromagnetism, as covered in a 2nd-year "Electromagnetic Theory" course. Additionally, the project requires skills in differential calculus and vector analysis, typically acquired in a 2nd-year "Multivariate Calculus" course.
 }
 
 \subsection{Organization of Document}
@@ -306,6 +309,7 @@ The Figure \ref{Fig_SystemContext} illustrates the user and software interaction
 \end{itemize}
 \item \progname{} Responsibilities:
 \begin{itemize}
+\item Check if the input data are valid; if not, present an appropriate message to the user.
 \item Accurately calculate the current required in each coil based on the user-provided input data.
 \item Present the calculated data in a clear and understandable format to the user.
 \item Verify that the calculated current is within the operational range of the system, ensuring the values are practical and safe for real-world application.
@@ -368,7 +372,7 @@ includes the following elements:
  {
   \includegraphics[width=0.5\textwidth]{hcs.png}
  }
- \caption{\label{helmholtz} Three-axis Helmholtz Coil System}
+ \caption{\label{helmholtz} Three-axis Helmholtz Coil System(\cite{dexingmagnet})}
  \end{center}
  \end{figure}
 
@@ -400,9 +404,6 @@ change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_directPower}:]
-The system is assumed to be powered by a direct current source, ensuring that the generated magnetic field is steady.
-
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_noExtField}:]
 It is assumed there are no significant external magnetic fields present that could interfere with the magnetic field generated by the Helmholtz coil system. This ensures that the magnetic field within the operational area is solely due to the coils themselves.
 
@@ -430,7 +431,7 @@ on.
 }
 % #5 description
 {
-The equation represents the force on a magnetic dipole in an inhomogeneous magnetic field. Here, \( \mathbf{F} \)(\si{\newton}) is the force, \( \mathbf{m} \)(\si{\ampere\square\meter}) is the magnetic moment,\( \mathbf{B} \)(\si{\tesla}) is the magnetic field. }
+The equation represents the force on a magnetic dipole in an inhomogeneous magnetic field. Here, \( \mathbf{F} \)(\si{\newton}) is the force, \( \mathbf{m} \)(\si{\ampere\square\meter}) is the magnetic moment, \( \mathbf{B} \)(\si{\tesla}) is the magnetic field.$\nabla$ is a vector operator that includes partial derivatives with respect to spatial coordinates. }
 % #6 Notes
 {
 None.
@@ -464,7 +465,7 @@ None
 }
 % #5 description
 {
-The equation represents magnetic torque \( \mathbf{\tau} \) (\si{\newton\meter}) experienced by a magnetic dipole in a uniform magnetic field. There the torque \( \mathbf{\tau} \) (\si{\newton\meter})is given by the vector cross product of the magnetic moment \( \mathbf{m} \)(\si{\ampere\square\meter}) and the magnetic field \( \mathbf{B} \)(\si{\tesla}).
+The equation represents magnetic torque \( \vec{\tau} \) (\si{\newton\meter}) experienced by a magnetic dipole in a uniform magnetic field. There the torque \( \vec{\tau} \) (\si{\newton\meter})is given by the vector cross product of the magnetic moment \(\vec{m} \)(\si{\ampere\square\meter}) and the magnetic field \(\vec{B} \)(\si{\tesla}).
 }
 % #6 Notes
 {
@@ -494,15 +495,15 @@ None
 % #4 equation
 {
 \begin{equation}
-\vec{B} = \frac{\mu_0}{4\pi} \frac{Id\vec{l} \times \vec{r}}{r^2}
+\vec{B} = \frac{\mu_0}{4\pi} \frac{Id\vec{l} \times \vec{r}}{\|\vec{r}\|^2}
 \end{equation}
 }
 % #5 description
 {
-The equation gives the magnetic flux density $\vec{B}$ (\si{\tesla}) generated by a constant electric current $I$ (\si{\ampere}) of a current-carrying wire at position $r$ (\si{\meter}) in 3D space where $\mu_0$ is the magnetic constant (\si{\newton\per\ampere\squared})and $\vec{r}$ is the position vector from the current element to the point where the field is being calculated.}
+The equation gives the magnetic flux density $\vec{B}$ (\si{\tesla}) generated by a constant electric current $I$ (\si{\ampere}) of a current-carrying wire at position $r$ (\si{\meter}) in 3D space where $\mu_0$ is the magnetic constant (\si{\newton\per\ampere\squared}) and $\vec{r}$ is the position vector from the current element to the point where the field is being calculated.}
 % #6 Notes
 {
-None.
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
 }
 % #7 Source
 {
@@ -556,6 +557,8 @@ The equation represents the magnetic field $B$ along the axis of a coil with mul
     \item \(R\): The radius of the coil(\si{\meter}).
     \item \(x\): The distance from the center of the coil along its axis to the point(\si{\meter}).
 \end{itemize}
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
+
 \\
 \hline
   Source & \url{http://physics.bu.edu/~duffy/semester2/c16_loop.html} \\
@@ -618,6 +621,8 @@ In a Helmholtz coil setup, we have two identical circular coils that are spaced 
     \item \(x\): The distance from the center of the coil along its axis to the point(\si{\meter}).
     \item \(l\): The distance between two coils(\si{\meter}).
 \end{itemize}
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
+
 \\
 \hline
   Source & \url{https://en.wikipedia.org/wiki/Helmholtz_coil} \\
@@ -627,7 +632,7 @@ In a Helmholtz coil setup, we have two identical circular coils that are spaced 
 \end{tabular}
 \end{minipage}\\
 
-\subsubsection*{Detailed derivation of magnetic field in the center of a Helmholtz Coil along the axis of it  }
+\subsubsection*{Detailed derivation of magnetic field in the center of a Helmholtz Coil along the axis of the coil}
 In a Helmholtz coil setup, we have two identical circular coils that are spaced a distance apart equal to their radius. Each coil produces its own magnetic field \dref{mfc}, and because the coils are arranged along the same axis and the currents flow in the same direction, the magnetic fields generated by the individual coils add up constructively in the space between them.
 
 
@@ -659,6 +664,8 @@ In a Helmholtz coil setup, we have two identical circular coils that are spaced 
     \item \(x\): The distance from the center of the coil along its axis to the point(\si{\meter}).
     \item \(l\): The distance between two coils(\si{\meter}).
 \end{itemize}
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
+
 \\
 \hline
   Source & \url{https://en.wikipedia.org/wiki/Helmholtz_coil} \\
@@ -700,12 +707,13 @@ The goals \gsref{G_force} and \gsref{G_torque} are solved by \iref{cnf} and \ire
   \hline
   Label& \bf Current needed for target force\\
   \hline
-  Input& $\vec{f}$, $\vec{m}$, $R_x$, $R_y$, $R_z$, $l_x$, $l_y$, $l_z$, $N_x$, $N_y$, $N_z$,$\text{max\_}I_x$, $\text{max\_}I_y$, $\text{max\_}I_z$ \\
+  Input& $\vec{f}$, $\vec{m}$, $R_x$, $R_y$, $R_z$, $l_x$, $l_y$, $l_z$, $N_x$, $N_y$, $N_z$, $I_{{max}_x}$, $I_{{max}_y}$, $I_{{max}_z}$ \\
  
   \hline
   Output& $\vec{I_1} =[-\frac{2\left( \frac{l_{x}^{2}}{4}+R_{x}^{2} \right) ^{5/2}}{3\mu _0N_xR_{x}^{2}l_xm_x}F_x, -\frac{2\left( \frac{l_{y}^{2}}{4}+R_{y}^{2} \right) ^{5/2}}{3\mu _0N_yR_{y}^{2}l_ym_y}F_y,-\frac{2\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{5/2}}{3\mu _0N_zR_{z}^{2}l_zm_z}F_z]$\\
   \hline
   Description& With condisitons\aref{A_generateWithinCenter},\aref{A_noExtField},and $B$ from \dref{mfcm} we calculate the spatial derivative of $B_x$ with respect to x, which describes how the field changes along the axis. 
+  
 
 $\frac{d}{dx}B_x\left( x \right) =-\frac{3\mu _0N_xI_xR_{x}^{2}x}{2\left( x^2+R_{x}^{2} \right) ^{5/2}}+\frac{3\mu _0N_xI_xR_{x}^{2}\left( x-l_x \right)}{2\left( \left( l_x-x \right) ^2+R_{x}^{2} \right) ^{5/2}}$
 
@@ -727,11 +735,14 @@ $\Longrightarrow I_y=-\frac{2\left( \frac{l_{y}^{2}}{4}+R_{y}^{2} \right) ^{5/2}
 
 $\Longrightarrow I_z=-\frac{2\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{5/2}}{3\mu _0N_zR_{z}^{2}l_zm_z}F_z$
 
+
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
+
   \\
   \hline
   Sources& Derived from the mentioned equations\\
   \hline
-  Ref.\ By & \rref{R_Calculate1}\\
+  Ref.\ By & \rref{R_Calculate}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -749,18 +760,20 @@ $\Longrightarrow I_z=-\frac{2\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{5/2}
   \hline
   Label& \bf Current needed for target torque\\
   \hline
-  Input& $\vec{\tau}$, $\vec{m}$, $R_x$, $R_y$, $R_z$, $l_x$, $l_y$, $l_z$, $N_x$, $N_y$, $N_z$,$\text{max\_}I_x$, $\text{max\_}I_y$, $\text{max\_}I_z$ \\
+  Input& $\vec{\tau}$, $\vec{m}$, $R_x$, $R_y$, $R_z$, $l_x$, $l_y$, $l_z$, $N_x$, $N_y$, $N_z$, $I_{{max}_x}$, $I_{{max}_y}$, $I_{{max}_z}$ \\
 
   \hline
-  Output& $\vec{I_2}=\left[\frac{1}{\frac{m^2\mu _0N_xR_{x}^{2}}{\left( \frac{l_{x}^{2}}{4}+R_{x}^{2} \right) ^{3/2}}}\left[ \tau _ym_z-\tau _zm_y \right] ,\frac{1}{\frac{m^2\mu _0N_yR_{y}^{2}}{\left( \frac{l_{y}^{2}}{4}+R_{y}^{2} \right) ^{3/2}}}\left[ \tau _zm_x-\tau _xm_z \right], \frac{1}{\frac{m^2\mu _0N_zR_{z}^{2}}{\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{3/2}}}\left[ \tau _xm_y-\tau _ym_x \right]\right]$\\
+  Output& ${I_2}=\left[\frac{1}{\frac{m^2\mu _0N_xR_{x}^{2}}{\left( \frac{l_{x}^{2}}{4}+R_{x}^{2} \right) ^{3/2}}}\left[ \tau _ym_z-\tau _zm_y \right] ,\frac{1}{\frac{m^2\mu _0N_yR_{y}^{2}}{\left( \frac{l_{y}^{2}}{4}+R_{y}^{2} \right) ^{3/2}}}\left[ \tau _zm_x-\tau _xm_z \right], \frac{1}{\frac{m^2\mu _0N_zR_{z}^{2}}{\left( \frac{l_{z}^{2}}{4}+R_{z}^{2} \right) ^{3/2}}}\left[ \tau _xm_y-\tau _ym_x \right]\right]$\\
   \hline
-    Description& With condisitons\aref{A_generateWithinCenter},\aref{A_noExtField},and $B$ from \dref{cfmh} we calculate the spatial derivative of $B_x$ with respect to x, which describes how the field changes along the axis. 
+    Description& With condisitons\aref{A_generateWithinCenter},\aref{A_noExtField},and $B$ from \dref{cfmh} we calculate the spatial derivative of $B_x$ with respect to x, which describes how the field changes along the axis.
+    
 
+See constant $\mu_0$ in Appendix~\ref{AuxiliaryConstants}.
   \\
   \hline
   Sources& Derived from the mentioned equations \\
   \hline
-  Ref.\ By & \rref{R_Calculate1}\\
+  Ref.\ By & \rref{R_Calculate}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -834,18 +847,18 @@ uncertainty quantification exercise.
                              \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
 
-  $R_x$ & $R_x > 0$ & $R_x > 0$ & 0.2 \si{\metre} & 0\% \\
-  $R_y$ & $R_y > 0$ & $R_y > 0$ & 0.2 \si{\metre} & 0\% \\
-  $R_z$ & $R_z > 0$ & $R_z > 0$ & 0.2 \si{\metre} & 0\% \\
-  $l_x$ & $l_x > 0$ & $l_x > 0$ & 0.2 \si{\metre} & 0\% \\
-  $l_y$ & $l_y > 0$ & $l_y > 0$ & 0.2 \si{\metre} & 0\% \\
-  $l_z$ & $l_z > 0$ & $l_z > 0$ & 0.2 \si{\metre} & 0\% \\
-  $N_x$ & $N_x \in \mathbb{Z}$ & $N_x \in \mathbb{Z}$ & 100 & 0\% \\
-  $N_y$ & $N_y \in \mathbb{Z}$ &  $N_y \in \mathbb{Z}$ & 100 & 0\% \\
-  $N_z$ & $N_z \in \mathbb{Z}$ & $N_z \in \mathbb{Z}$ & 100 & 0\% \\
-  $maxI_x$ & $maxI_x > 0$ & $maxI_x > 0$  & 10 \si{\ampere} & 0\% \\
-  $maxI_y$ &  $maxI_y > 0$ &  $maxI_y > 0$ & 10 \si{\ampere} & 0\% \\
-  $maxI_z$ &  $maxI_z > 0$ &$maxI_z > 0$ & 10 \si{\ampere} & 0\% \\
+  $R_x$ & $R_x > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $R_y$ & $R_y > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $R_z$ & $R_z > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $l_x$ & $l_x > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $l_y$ & $l_y > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $l_z$ & $l_z > 0$ &   & 0.2 \si{\metre} & 0\% \\
+  $N_x$ & $N_x \in \mathbb{Z}$ & & 100 & 0\% \\
+  $N_y$ & $N_y \in \mathbb{Z}$ & & 100 & 0\% \\
+  $N_z$ & $N_z \in \mathbb{Z}$ & & 100 & 0\% \\
+  $I_{{max}_x}$ & $I_{{max}_x} > 0$ & $ $  & 10 \si{\ampere} & 0\% \\
+  $I_{{max}_y}$ & $I_{{max}_y} > 0$ &  $ $ & 10 \si{\ampere} & 0\% \\
+  $I_{{max}_z}$ & $I_{{max}_z} > 0$ &$ $ & 10 \si{\ampere} & 0\% \\
 
   \bottomrule
 \end{longtable*}
@@ -863,12 +876,12 @@ uncertainty quantification exercise.
   \toprule
   \textbf{Var} & \textbf{Physical Constraints} \\
   \midrule 
-   $I_{1x}$ & $I_{1x} \leq \text maxI_{x}$\\
-   $I_{1y}$ & $I_{1y} \leq \text maxI_{y}$\\
-   $I_{1z}$ & $I_{1z} \leq \text maxI_{z}$\\
-   $I_{2x}$ & $I_{2x} \leq \text maxI_{x}$\\
-   $I_{2y}$ & $I_{2y} \leq \text maxI_{y}$\\
-   $I_{2z}$ & $I_{2z} \leq \text maxI_{z}$\\
+   $I_{1x}$ & $I_{1x} \leq \text I_{{max}_x}$\\
+   $I_{1y}$ & $I_{1y} \leq \text I_{{max}_y}$\\
+   $I_{1z}$ & $I_{1z} \leq \text I_{{max}_z}$\\
+   $I_{2x}$ & $I_{2x} \leq \text I_{{max}_x}$\\
+   $I_{2y}$ & $I_{2y} \leq \text I_{{max}_y}$\\
+   $I_{2z}$ & $I_{2z} \leq \text I_{{max}_z}$\\
   \bottomrule
 \end{longtable*}
 \end{table}
@@ -886,11 +899,11 @@ qualities that the software is expected to exhibit.
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] {The software shall allow users to input the target magnetic torque, magnetic force, the magnetic moment of magnetic particle, and characteristics of a three-axis Helmholtz coil system, including the number of turns in each coil, the radius of each coil, and the distance between the coils.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate1}:] {The software shall calculate the required current for each coil to produce a specified magnetic force and torque by using \iref{cnf} and \iref{cnt}.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] {The software shall calculate the required current for each coil to produce a specified magnetic force and torque by using \iref{cnf} and \iref{cnt}.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_output}:] {The software shall verify that the calculated currents fall within the acceptable current range.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Verify}:] {The software shall verify that the calculated currents fall within the acceptable current range.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] {The software shall perform calculations with an accuracy that meets the requirements of typical scientific and engineering applications.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Acu}:] {The software shall perform calculations with an accuracy that meets the requirements of typical scientific and engineering applications.}
 
 \end{itemize}
 
@@ -915,7 +928,7 @@ qualities that the software is expected to exhibit.
 
 \subsection{Rationale}
 {
-The project focuses on designing a calculator to determine the currents required in a three-axis Helmholtz coil system for generating specific magnetic forces and torques. This scope is chosen to address the challenges in precise magnetic field manipulation, which is crucial for various scientific and industrial applications. Assumptions like direct current usage, isolation from external magnetic fields, and target magnetic field generation within the Helmholtz coil's center are made to simplify the model. These assumptions are based on typical conditions such a system operates, ensuring that the model remains relevant to real-world applications.
+The project focuses on designing a calculator to determine the currents required in a three-axis Helmholtz coil system for generating specific magnetic forces and torques. This scope is chosen to address the challenges in precise magnetic field manipulation, which is crucial for various scientific and industrial applications. Assumptions like isolation from external magnetic fields, and target magnetic field generation within the Helmholtz coil's center are made to simplify the model. These assumptions are based on typical conditions such a system operates, ensuring that the model remains relevant to real-world applications.
 }
 \section{Likely Changes}    
 
@@ -946,65 +959,55 @@ other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, and likely changes on
 the assumptions.
 
-\afterpage{
-\begin{table}[h!]
+\begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline        
+& \dref{mfc}&\dref{cfmh} &\dref{mfcm} & \iref{cnf}& \iref{cnt} \\
 \hline
-	& \aref{A_directPower}& \aref{A_noExtField}& \aref{A_generateWithinCenter} \\
+\tref{TM:FBD}   & & & & X&  \\ \hline
+\tref{TM:TBD}   & & & & & X \\ \hline
+\tref{TM:BSL}   & X& & & & \\ \hline
+\dref{mfc}      & &  X& X& &  \\ \hline
+\dref{cfmh}     & & & & & X \\ \hline
+\dref{mfcm}     & & & & X&  \\ \hline
+\end{tabular}
+\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
+\label{Table:trace}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-\tref{TM:FBD}    & & &  \\ \hline
-\tref{TM:TBD}    & & &  \\ \hline
-\tref{TM:BSL}    & & &   \\ \hline
-\dref{mfc}       & X& & X  \\ \hline
-\dref{cfmh}      & X& & X\\ \hline
-\dref{mfcm}      & X& & X\\ \hline
-\iref{cnf}       & X& X& X  \\ \hline
-\iref{cnt}       & X& X& X\\
+ & \iref{cnf} & \iref{cnt} & \rref{R_Inputs} & \rref{R_Calculate} & \rref{R_Verify} & \rref{R_Acu} \\ \hline
+\iref{cnf}          & X   &   &X   &X   &    &    \\ \hline
+\iref{cnt}          &     &X  &X   &X   &    &    \\ \hline
+\rref{R_Inputs}     &X    &X  &X   &    &    &    \\ \hline
+\rref{R_Calculate}  &X    &X  &    &X   &    &    \\ \hline
+\rref{R_Verify}     &     &   &    &    &X   &    \\ \hline
+\rref{R_Acu}        &     &   &    &    &    &X   \\ \hline
+\end{tabular}
+\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+& \aref{A_noExtField}& \aref{A_generateWithinCenter} \\
+\hline
+\dref{mfc}       & & X  \\ \hline
+\dref{cfmh}      & & X\\ \hline
+\dref{mfcm}      & & X\\ \hline
+\iref{cnf}       & X& X  \\ \hline
+\iref{cnt}       & X& X\\
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:A_trace}
 \end{table}
 
-}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline        
-	& \tref{TM:FBD}& \tref{TM:TBD}& \tref{TM:BSL}& \dref{mfc}&\dref{cfmh} &\dref{mfcm} & \iref{cnf}& \iref{cnt} \\
-\hline
-\tref{TM:FBD}   & & & & & & & X&  \\ \hline
-\tref{TM:TBD}   & & & & & & & & X \\ \hline
-\tref{TM:BSL}   & & & & & & & & \\ \hline
-\dref{mfc}      & & & & &  X& X& &  \\ \hline
-\dref{cfmh}     & & & & & & & & X \\ \hline
-\dref{mfcm}     & & & & & & & X&  \\ \hline
-\iref{cnf}      & & & & & & & &   \\ \hline
-\iref{cnt}      & & & & & & & &  \\\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
-\label{Table:trace}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-	& \iref{cnf}& \iref{cnt}& \ref{sec_DataConstraints}& \rref{R_Inputs} \\
-\hline
-\iref{cnf}            & & X& &   \\ \hline
-\iref{cnt}            & X& & & \\ \hline
-\rref{R_Inputs}     & & & & \\ \hline
-\rref{R_Calculate1}   & & & & \\ \hline
-\rref{R_Output}     & X& & &  \\ \hline 
-
-
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
-\label{Table:R_trace}
-\end{table}
 
 The purpose of the traceability graphs is also to provide easy references on
 what has to be additionally modified if a certain component is changed.  The
@@ -1034,7 +1037,7 @@ changed.
 % 	\end{center}
 % \end{figure}
 
-\section{Values of Auxiliary Constants}
+\section{Values of Auxiliary Constants}\label{AuxiliaryConstants}
 {
 $\mu_0 = 4\pi \times \SI{1e-7}{\henry\per\meter}$
 }
